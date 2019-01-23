@@ -6,27 +6,52 @@ public class Main {
 
     public static void main(String[] args) {
 
-        double[] dailyAverageTemps = new double[7];
-        double weeklySum = 0;
-        double weeklyAverage;
+        double[] dailyAverageFahrenheitTemps = new double[7];
+        double[] dailyAverageCelsiusTemps = new double[7];
+
+        double weeklySumFahrenheit = 0;
+        double weeklySumCelsius = 0;
+        double weeklyAverageFahrenheit;
+        double weeklyAverageCelsius;
 
         Scanner scanner = new Scanner(System.in);
 
-        for(int i = 0; i < dailyAverageTemps.length; i++){
-           System.out.println("Please enter the temperature for day in degrees Fahrenheit for day " + i);
+        for(int i = 0; i < dailyAverageFahrenheitTemps.length; i++){
+           System.out.println("Please enter the temperature for day " + (i +1) + " in degrees Fahrenheit." );
 
-           dailyAverageTemps[i] = scanner.nextDouble();
+           dailyAverageFahrenheitTemps[i] = scanner.nextDouble();
         }
 
 
-        for(int i = 0; i < dailyAverageTemps.length; i++){
+        for(int i = 0; i < dailyAverageFahrenheitTemps.length; i++){
+            weeklySumFahrenheit+= dailyAverageFahrenheitTemps[i];
 
-            System.out.println(dailyAverageTemps[i]);
-            weeklySum+= dailyAverageTemps[i];
         }
 
+        int counter = 0;
+        for (double temp: dailyAverageFahrenheitTemps) {
 
-        weeklyAverage = weeklySum/dailyAverageTemps.length;
-        System.out.println("The weekly average temp was " + weeklyAverage + ".");
+            double dailyTempInCelsius = ((temp - 32) * .5556);
+
+            dailyAverageCelsiusTemps[counter] = dailyTempInCelsius;
+
+            weeklySumCelsius += dailyTempInCelsius;
+
+            counter++;
+
+        }
+
+            int count = 0;
+            for(double temp : dailyAverageFahrenheitTemps){
+                System.out.println("On day " + (count + 1) + " the temp of " + temp + " Fahrenheit converts to " + dailyAverageCelsiusTemps[count]);
+                count++;
+            }
+
+
+        weeklyAverageFahrenheit = weeklySumFahrenheit/dailyAverageFahrenheitTemps.length;
+        weeklyAverageCelsius = weeklySumCelsius/dailyAverageCelsiusTemps.length;
+
+        System.out.println("The weekly average temp was " + weeklyAverageFahrenheit + " Fahrenheit which is " + weeklyAverageCelsius + " Celsius.");
+
     }
 }
