@@ -6,52 +6,47 @@ public class Main {
 
     public static void main(String[] args) {
 
-        double[] dailyAverageFahrenheitTemps = new double[7];
-        double[] dailyAverageCelsiusTemps = new double[7];
+        Temperature[] dailyTemperatures = new Temperature[7];
 
         double weeklySumFahrenheit = 0;
         double weeklySumCelsius = 0;
-        double weeklyAverageFahrenheit;
-        double weeklyAverageCelsius;
+        int printFahrenheitOrCelsius = 1;
 
         Scanner scanner = new Scanner(System.in);
 
-        for(int i = 0; i < dailyAverageFahrenheitTemps.length; i++){
+        for(int i = 0; i < dailyTemperatures.length; i++){
            System.out.println("Please enter the temperature for day " + (i +1) + " in degrees Fahrenheit." );
+           dailyTemperatures[i] = new Temperature();
 
-           dailyAverageFahrenheitTemps[i] = scanner.nextDouble();
+           double enteredTemperature = scanner.nextDouble();
+           dailyTemperatures[i].setTempInFahrenheit(enteredTemperature);
         }
 
 
-        for(int i = 0; i < dailyAverageFahrenheitTemps.length; i++){
-            weeklySumFahrenheit+= dailyAverageFahrenheitTemps[i];
+        System.out.println("Would you like your results in [1] Fahrenheit or [2] Celsius");
+        printFahrenheitOrCelsius = scanner.nextInt();
 
+        int dayCounterLabel = 0;
+        for (Temperature temp: dailyTemperatures) {
+
+            temp.convertToCelsius(temp.getTempInFahrenheit());
+
+            weeklySumCelsius += temp.getTempInCelsius();
+            weeklySumFahrenheit += temp.getTempInFahrenheit();
+
+              if(printFahrenheitOrCelsius == 1) {
+                  System.out.println("Day " + (dayCounterLabel + 1) + " : " + temp.getTempInFahrenheit() + " Fahrenheit.");
+              } else {
+                  System.out.println("Day " + (dayCounterLabel + 1) + " : " + temp.getTempInCelsius() + " Celsius.");
+              }
+
+            dayCounterLabel++;
         }
 
-        int counter = 0;
-        for (double temp: dailyAverageFahrenheitTemps) {
-
-            double dailyTempInCelsius = ((temp - 32) * .5556);
-
-            dailyAverageCelsiusTemps[counter] = dailyTempInCelsius;
-
-            weeklySumCelsius += dailyTempInCelsius;
-
-            counter++;
-
+        if(printFahrenheitOrCelsius == 1) {
+            System.out.println("The weekly average temp in Fahrenheit was " + (weeklySumFahrenheit / dailyTemperatures.length));
+        } else {
+            System.out.println("The weekly average temp in Celsius was " + (weeklySumCelsius / dailyTemperatures.length));
         }
-
-            int count = 0;
-            for(double temp : dailyAverageFahrenheitTemps){
-                System.out.println("On day " + (count + 1) + " the temp of " + temp + " Fahrenheit converts to " + dailyAverageCelsiusTemps[count]);
-                count++;
-            }
-
-
-        weeklyAverageFahrenheit = weeklySumFahrenheit/dailyAverageFahrenheitTemps.length;
-        weeklyAverageCelsius = weeklySumCelsius/dailyAverageCelsiusTemps.length;
-
-        System.out.println("The weekly average temp was " + weeklyAverageFahrenheit + " Fahrenheit which is " + weeklyAverageCelsius + " Celsius.");
-
     }
 }
